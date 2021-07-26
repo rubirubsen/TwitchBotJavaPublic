@@ -1,3 +1,5 @@
+import org.jetbrains.annotations.NotNull;
+
 import java.io.*;
 import java.net.*;
 
@@ -23,10 +25,12 @@ class main {
         DataInputStream is = null;
         DataOutputStream os = null;
 
+        client = new Socket(hostname, port);
+        os = new DataOutputStream(client.getOutputStream());
+        is = new DataInputStream(client.getInputStream());
+
         try {
-            client = new Socket(hostname, port);
-            os = new DataOutputStream(client.getOutputStream());
-            is = new DataInputStream(client.getInputStream());
+
 
 
             if (client != null && os != null && is != null) {
@@ -76,5 +80,9 @@ class main {
             } catch (IOException e) {
                e.printStackTrace();
            }
+    }
+
+    private static void cool(DataInputStream os) {
+
     }
 }
