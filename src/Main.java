@@ -41,6 +41,8 @@ class main {
 
                 String response = "";
 
+
+
                 while ((response = is.readLine()) != null) {
 
                     if (response.contains("004")) {
@@ -66,8 +68,7 @@ class main {
                         os.writeBytes(pong + "\r\n");
                         System.out.println(pong);
                     }else if (response.contains("cool")) {
-                        os.writeBytes("PRIVMSG #rubizockt :;)\r\n");
-                        System.out.println("Cooler Typ");
+                        cool(os, response);
                     } else {
                         System.out.println(response);
                     }
@@ -82,7 +83,13 @@ class main {
            }
     }
 
-    private static void cool(DataInputStream os) {
-
+    private static void cool(DataOutputStream os,String response) {
+        String usrmsg = (response.substring(response.indexOf(":")+1, response.indexOf("!")));
+        try {
+            os.writeBytes("PRIVMSG #rubizockt :;)\r\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Cooler Typ, der " + usrmsg);
     }
 }
