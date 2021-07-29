@@ -51,10 +51,10 @@ public class cmds {
     public void info() throws IOException {
 
 
-        URL url = new URL("https://api.twitch.tv/helix/streams?user_login=RubiZockt");
+        URL url = new URL("https://api.twitch.tv/kraken/users?login=rubizockt");
         HttpURLConnection http = (HttpURLConnection)url.openConnection();
-        http.setRequestProperty("Authorization", "Bearer sqzgvaizxciv4zq5n1vzpib4l9lv9i");
-        http.setRequestProperty("Client-Id", "o2aamy4s11aewdlmkb9vj4w11vzanv");
+        http.setRequestProperty("Accept", "application/vnd.twitchtv.v5+json");
+        http.setRequestProperty("Client-ID", "o2aamy4s11aewdlmkb9vj4w11vzanv");
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(http.getInputStream(), "UTF-8"))) {
 
@@ -69,5 +69,7 @@ public class cmds {
 /*
 NACHRICHTENFORMAT
 :tunzie95!tunzie95@tunzie95.tmi.twitch.tv PRIVMSG #rubizockt :nachricht
-
+"Client-Id", "o2aamy4s11aewdlmkb9vj4w11vzanv"
+"Authorization", "Bearer n8jh5s2gne756s7hewval1u7r597bt"
+oauth:og530u4hzcj0jvh5ru176ays6hun7u
  */
