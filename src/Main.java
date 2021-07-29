@@ -1,5 +1,7 @@
-import java.io.*;
-import java.net.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 
 class main {
 
@@ -79,7 +81,8 @@ class main {
 
                     }else if (response.contains("test")){
                         cmds c = new cmds();
-                        c.nachricht(response);
+                        c.info();
+
 
                 }else {
                         System.out.println(response);

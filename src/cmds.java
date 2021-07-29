@@ -1,5 +1,9 @@
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class cmds {
 
@@ -21,13 +25,13 @@ public class cmds {
         }
     }
 
-    public String user(String response){
-        String usrmsg = (response.substring(response.indexOf("!")+1, response.indexOf("@")));
+    public String user(String response) {
+        String usrmsg = (response.substring(response.indexOf("!") + 1, response.indexOf("@")));
         return usrmsg;
     }
 
-    public String nachricht(String response){
-        String msg = (response.substring(response.indexOf(":",2)+1));
+    public String nachricht(String response) {
+        String msg = (response.substring(response.indexOf(":", 2) + 1));
         return msg;
     }
 
@@ -43,8 +47,24 @@ public class cmds {
                 return "Kafee";
         }
     }
-}
 
+    public void info() throws IOException {
+
+
+        URL url = new URL("https://api.twitch.tv/helix/streams?user_login=RubiZockt");
+        HttpURLConnection http = (HttpURLConnection)url.openConnection();
+        http.setRequestProperty("Authorization", "Bearer sqzgvaizxciv4zq5n1vzpib4l9lv9i");
+        http.setRequestProperty("Client-Id", "o2aamy4s11aewdlmkb9vj4w11vzanv");
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(http.getInputStream(), "UTF-8"))) {
+
+            for (String line; (line = reader.readLine()) != null;) {
+
+                System.out.println(line);
+            }
+        }
+    }
+}
 
 /*
 NACHRICHTENFORMAT
