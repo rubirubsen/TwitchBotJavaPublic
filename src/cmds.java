@@ -2,10 +2,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 public class cmds {
-    
-    String usrmsg = "";
-    
-    public void cool(DataOutputStream os, String response, String usrmsg) {
+
+    public void cool(DataOutputStream os, String response) {
         try {
             os.writeBytes("PRIVMSG #rubizockt :;)\r\n");
         } catch (IOException e) {

@@ -73,7 +73,7 @@ class main {
                     }else if (response.contains("cool")) {
                         cmds c = new cmds();
                         c.user(response);
-                        c.cool(os, response, usrmsg);
+                        c.cool(os, response);
 
                     } else if (response.contains("bot")) {
                         cmds c = new cmds();
