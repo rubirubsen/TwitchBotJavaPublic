@@ -1,12 +1,9 @@
-import org.jetbrains.annotations.NotNull;
-
 import java.io.*;
 import java.net.*;
 
 class main {
-    public static final String delim = ":";
 
-    public static void main(String[] args) throws FileNotFoundException, IOException {
+    public static void main(String[] args) throws IOException {
         String hostname = "irc.chat.twitch.tv";
         int port = 6667;
 
@@ -22,9 +19,9 @@ class main {
                 + "\nReal Name: " + realName);
         System.out.println();
 
-        Socket client = null;
-        DataInputStream is = null;
-        DataOutputStream os = null;
+        Socket client;
+        DataInputStream is;
+        DataOutputStream os;
 
         client = new Socket(hostname, port);
         os = new DataOutputStream(client.getOutputStream());
@@ -41,8 +38,8 @@ class main {
                 os.writeBytes("USER " + username + " 0 * :" + realName + "\r\n");
                 os.flush();
 
-                String response = "";
-                String usrmsg = "";
+                String response;
+                String usrmsg;
 
 
                 while ((response = is.readLine()) != null) {
@@ -66,8 +63,8 @@ class main {
 
                     usrmsg = "";
 
-                    if (response.substring(0, 4).equals("PING")) {
-                        String pong = "PONG" + response.substring(4, response.length());
+                    if (response.startsWith("PING")) {
+                        String pong = "PONG" + response.substring(4);
                         os.writeBytes(pong + "\r\n");
                         System.out.println(pong);
                     }else if (response.contains("cool")) {
