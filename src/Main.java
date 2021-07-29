@@ -7,13 +7,14 @@ class main {
     public static final String delim = ":";
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
-        String hostname = "irc.freenode.org";
+        String hostname = "irc.chat.twitch.tv";
         int port = 6667;
 
         String nickname = "kfeemaschine";
         String username = "kfeemaschine";
         String realName = "kfeemaschine";
-        String[] channel = {"#rubizockt" , "#rubizo2"};
+        String oauth = "oauth:z0m1idvt6qm11bshf3wzru26mypai6";
+        String channel = "#rubizockt";
 
 
         System.out.println("Server: " + hostname + "\nPort: " + port
@@ -35,12 +36,13 @@ class main {
 
             if (client != null && os != null && is != null) {
 
+                os.writeBytes("PASS " + oauth + "\r\n");
                 os.writeBytes("NICK " + nickname + "\r\n");
                 os.writeBytes("USER " + username + " 0 * :" + realName + "\r\n");
                 os.flush();
 
                 String response = "";
-
+                String usrmsg = "";
 
 
                 while ((response = is.readLine()) != null) {
@@ -48,12 +50,11 @@ class main {
                     if (response.contains("004")) {
                         System.out.println("Log in erfolgreich!");
                         // We are now logged in.
-                        for(int i=0;i<channel.length;i++){
-                            os.writeBytes("JOIN " + channel[i] + "\r\n");
-                            os.flush();
+                        os.writeBytes("JOIN " + channel + "\r\n");
+                        os.flush();
                         }
 
-                    }
+
 
                     else if (response.contains("433")) {
 
@@ -63,13 +64,27 @@ class main {
 
                     }
 
+                    usrmsg = "";
+
                     if (response.substring(0, 4).equals("PING")) {
                         String pong = "PONG" + response.substring(4, response.length());
                         os.writeBytes(pong + "\r\n");
                         System.out.println(pong);
                     }else if (response.contains("cool")) {
-                        cool(os, response);
-                    } else {
+                        cmds c = new cmds();
+                        c.user(response);
+                        c.cool(os, response, usrmsg);
+
+                    } else if (response.contains("bot")) {
+                        cmds c = new cmds();
+                        c.user(response);
+                        c.nobot(os, response, usrmsg);
+
+                    }else if (response.contains("test")){
+                        cmds c = new cmds();
+                        c.nachricht(response);
+
+                }else {
                         System.out.println(response);
                     }
                     os.flush();
@@ -83,13 +98,5 @@ class main {
            }
     }
 
-    private static void cool(DataOutputStream os,String response) {
-        String usrmsg = (response.substring(response.indexOf(":")+1, response.indexOf("!")));
-        try {
-            os.writeBytes("PRIVMSG #rubizockt :;)\r\n");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Cooler Typ, der " + usrmsg);
-    }
+
 }
