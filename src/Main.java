@@ -77,8 +77,8 @@ class main {
 
                     } else if (response.contains("bot")) {
                         cmds c = new cmds();
-                        c.user(response);
                         c.nobot(os, response, usrmsg);
+                        System.out.println(c.nachricht(response) + ">>" + c.user(response));
 
                     }else if (response.contains("test")){
                         cmds c = new cmds();

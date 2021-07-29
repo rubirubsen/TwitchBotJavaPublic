@@ -2,7 +2,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 public class cmds {
+    
     String usrmsg = "";
+    
     public void cool(DataOutputStream os, String response, String usrmsg) {
         try {
             os.writeBytes("PRIVMSG #rubizockt :;)\r\n");
@@ -19,18 +21,15 @@ public class cmds {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("BOT ALERT!! " + user(response));
     }
 
     public String user(String response){
         String usrmsg = (response.substring(response.indexOf("!")+1, response.indexOf("@")));
-        System.out.println(usrmsg);
         return usrmsg;
     }
 
     public String nachricht(String response){
         String msg = (response.substring(response.indexOf(":",2)+1));
-        System.out.println(msg);
         return msg;
     }
 
