@@ -22,6 +22,7 @@ public class cmds {
             os.writeBytes("PRIVMSG #rubizockt :Hier gibt es keine Bots, " + user(response) + "\r\n");
         } catch (IOException e) {
             e.printStackTrace();
+
         }
     }
 
