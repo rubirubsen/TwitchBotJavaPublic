@@ -102,6 +102,7 @@ class main {
 }
 
 /*
+LOGIKGEDANKEN:
 
 prefixchar = "!" ;
 prefixchar + msgcontent (ab dem 2. :) = command
