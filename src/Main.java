@@ -69,7 +69,7 @@ class main {
                         String pong = "PONG" + response.substring(4);
                         os.writeBytes(pong + "\r\n");
                         System.out.println(pong);
-                    }else /* hier Test Wortanzahl (==1 -> command) einfügen */ if (response.contains("cool")) {
+                    }else /* hier Test Wortanzahl (==1 -> command) einfügen | wenn 1 wort dann command ausführen sonst sout */ if (response.contains("cool")) {
                         cmds c = new cmds();
                         c.user(response);
                         c.cool(os, response);
