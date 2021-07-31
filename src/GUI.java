@@ -2,8 +2,17 @@ import javax.swing.*;
 
 public class GUI {
     private JPanel mainWindow;
-    private JTextPane textPane1;
+    private JTextArea jtaMSG;
+    private JToolBar Tool;
+    private JButton banButton;
+    private JButton timeoutButton;
+    private JButton OPButton;
+    private JButton DEOPButton;
+    private JButton STARTBOTButton;
+    private JButton STOPBOTButton;
+    private JButton VIPButton;
     private JComboBox comboBox1;
+    private JTextArea jtaUSR;
     public String data = "Hallo Welt!";
 
     private void createUIComponents() {
