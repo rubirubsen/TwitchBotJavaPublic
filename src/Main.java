@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.Socket;
 
 class main {
-
+    StringBuffer responseContent = new StringBuffer();
     public static void main(String[] args) throws IOException {
         String hostname = "irc.chat.twitch.tv";
         int port = 6667;
@@ -81,7 +81,7 @@ class main {
 
                     }else if (response.contains("test")){
                         cmds c = new cmds();
-                        c.info();
+                        c.channelSearch();
 
 
                 }else {

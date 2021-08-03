@@ -1,11 +1,18 @@
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
+
+
 public class cmds {
+    StringBuffer responseContent = new StringBuffer();
 
     public void cool(DataOutputStream os, String response) {
         try {
@@ -64,6 +71,53 @@ public class cmds {
                 System.out.println(line);
             }
         }
+    }
+
+    public void channelSearch () throws IOException {
+        HttpURLConnection connection;
+        StringBuffer responseContent = new StringBuffer();
+
+        try{
+            URL url = new URL("https://api.twitch.tv/kraken/streams/?language=de&offset=400&limit=1");
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestProperty("Accept", "application/vnd.twitchtv.v5+json");
+            connection.setRequestProperty("Client-ID", "o2aamy4s11aewdlmkb9vj4w11vzanv");
+
+            //Anfrage-Modell
+            connection.setRequestMethod("GET");
+            connection.setConnectTimeout(5000);
+            connection.setReadTimeout(5000);
+
+            int status = connection.getResponseCode();
+            System.out.println(status);
+
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"))) {
+
+                for (String line; (line = reader.readLine()) != null;) {
+
+                    String linefine = line.substring(line.indexOf("[") , line.length()-1);
+                    responseContent.append(linefine);
+                    System.out.println(linefine);
+                }
+                reader.close();
+            }
+            parse(responseContent.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static String parse(String responseBody) {
+        JSONArray channels = new JSONArray(responseBody);
+        for(int i = 0; i < channels.length(); i++){
+            JSONObject channel = channels.getJSONObject(i);
+            int viewers = channel.getInt("viewers");
+            String displayName = channel.getString("channel,name");
+
+            System.out.println(displayName + " " + viewers + " ");
+        }
+        return null;
     }
 }
 
