@@ -1,14 +1,10 @@
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-
 
 
 public class cmds {
@@ -38,7 +34,7 @@ public class cmds {
         return usrmsg;
     }
 
-    public String nachricht(String response) {
+    public static String nachricht(String response) {
         String msg = (response.substring(response.indexOf(":", 2) + 1));
         return msg;
     }
@@ -60,25 +56,25 @@ public class cmds {
 
 
         URL url = new URL("https://api.twitch.tv/kraken/users?login=rubizockt");
-        HttpURLConnection http = (HttpURLConnection)url.openConnection();
+        HttpURLConnection http = (HttpURLConnection) url.openConnection();
         http.setRequestProperty("Accept", "application/vnd.twitchtv.v5+json");
         http.setRequestProperty("Client-ID", "o2aamy4s11aewdlmkb9vj4w11vzanv");
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(http.getInputStream(), "UTF-8"))) {
 
-            for (String line; (line = reader.readLine()) != null;) {
+            for (String line; (line = reader.readLine()) != null; ) {
 
                 System.out.println(line);
             }
         }
     }
 
-    public void channelSearch () throws IOException {
+    public void channelSearch() throws IOException {
         HttpURLConnection connection;
         StringBuffer responseContent = new StringBuffer();
 
-        try{
-            URL url = new URL("https://api.twitch.tv/kraken/streams/?language=de&offset=400&limit=5");
+        try {
+            URL url = new URL("https://api.twitch.tv/kraken/streams/?language=de&offset=700&limit=5");
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("Accept", "application/vnd.twitchtv.v5+json");
             connection.setRequestProperty("Client-ID", "o2aamy4s11aewdlmkb9vj4w11vzanv");
@@ -89,35 +85,80 @@ public class cmds {
             connection.setReadTimeout(5000);
 
             int status = connection.getResponseCode();
-            System.out.println(status);
+            if (status == 200) {
+                System.out.println(status + " - OK");
+            }
 
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"))) {
 
-                for (String line; (line = reader.readLine()) != null;) {
+                for (String line; (line = reader.readLine()) != null; ) {
 
-                    String linefine = line.substring(line.indexOf("[") , line.length()-1);
+                    String linefine = line.substring(line.indexOf("["), line.length() - 1);
                     responseContent.append(linefine);
                     /* System.out.println(linefine); */
                     parse(linefine);
                 }
                 reader.close();
             }
-            parse(responseContent.toString());
+            /* parse(responseContent.toString()); */
         } catch (MalformedURLException e) {
             e.printStackTrace();
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     public static String parse(String responseBody) {
         JSONArray channels = new JSONArray(responseBody);
-        for(int i = 0; i < channels.length(); i++){
+        for (int i = 0; i < channels.length(); i++) {
             JSONObject channel = channels.getJSONObject(i);
             int viewers = channel.getInt("viewers");
             String channelName = channel.getJSONObject("channel").getString("display_name");
-            System.out.println("Der Kanal " + channelName + " hat gerade " + viewers + ". Stabil! \n\r");
+            System.out.println("Der Kanal " + channelName + " hat gerade " + viewers + " Viewer(s). Stabil!");
+
+            PrintWriter pWriter = null;
+            try {
+                pWriter = new PrintWriter(new BufferedWriter(new FileWriter("channels.txt", true)));
+                pWriter.print(channelName + "\n");
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            } finally {
+                if (pWriter != null) {
+                    pWriter.flush();
+                    pWriter.close();
+                }
+            }
         }
         return null;
+    }
+
+    public void sturmAngriff() {
+
+        File file = new File("channels.txt");
+
+        if (!file.canRead() || !file.isFile())
+            System.exit(0);
+
+        BufferedReader in = null;
+        try {
+            in = new BufferedReader(new FileReader("channels.txt"));
+            int anzahl = 0;
+            String zeile = null;
+            while ((zeile = in.readLine()) != null) {
+                System.out.println(zeile);
+                anzahl++;
+            }
+            System.out.println("Insgesamt waren das " + anzahl + " Channels. Gern geschehen!");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (in != null)
+                try {
+                    in.close();
+                } catch (IOException e) {
+                }
+        }
     }
 }
 

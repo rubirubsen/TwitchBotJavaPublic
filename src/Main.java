@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.net.Socket;
 
 class main {
+
     StringBuffer responseContent = new StringBuffer();
+
+
     public static void main(String[] args) throws IOException {
         String hostname = "irc.chat.twitch.tv";
         int port = 6667;
@@ -32,7 +35,6 @@ class main {
         try {
 
 
-
             if (client != null && os != null && is != null) {
 
                 os.writeBytes("PASS " + oauth + "\r\n");
@@ -51,11 +53,7 @@ class main {
                         // We are now logged in.
                         os.writeBytes("JOIN " + channel + "\r\n");
                         os.writeBytes("PRIVMSG #rubizockt : KonCha \r\n");
-                        }
-
-
-
-                    else if (response.contains("433")) {
+                    } else if (response.contains("433")) {
 
                         System.out.println("Nickname is already in use.");
 
@@ -69,7 +67,7 @@ class main {
                         String pong = "PONG" + response.substring(4);
                         os.writeBytes(pong + "\r\n");
                         System.out.println(pong);
-                    }else /* hier Test Wortanzahl (==1 -> command) einfügen | wenn 1 wort dann command ausführen sonst sout */ if (response.contains("cool")) {
+                    } else /* hier Test Wortanzahl (==1 -> command) einfügen | wenn 1 wort dann command ausführen sonst sout */ if (response.contains(";)")) {
                         cmds c = new cmds();
                         c.user(response);
                         c.cool(os, response);
@@ -79,27 +77,33 @@ class main {
                         c.nobot(os, response, usrmsg);
                         System.out.println(c.nachricht(response) + ">>" + c.user(response));
 
-                    }else if (response.contains("test")){
+                    } else if (response.contains("test")) {
                         cmds c = new cmds();
                         c.channelSearch();
 
+                    } else if (response.contains("go")) {
+                        cmds c = new cmds();
+                        c.sturmAngriff();
 
-                }else {
+
+                    } else {
                         System.out.println(response);
                     }
                     os.flush();
                 }
-                }
-                os.close();
-                is.close();
-                client.close();
-            } catch (IOException e) {
-               e.printStackTrace();
-           }
+            }
+            os.close();
+            is.close();
+            client.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
-
 }
+
+
+
+
 
 /*
 LOGIKGEDANKEN:
