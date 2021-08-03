@@ -78,7 +78,7 @@ public class cmds {
         StringBuffer responseContent = new StringBuffer();
 
         try{
-            URL url = new URL("https://api.twitch.tv/kraken/streams/?language=de&offset=400&limit=1");
+            URL url = new URL("https://api.twitch.tv/kraken/streams/?language=de&offset=400&limit=5");
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("Accept", "application/vnd.twitchtv.v5+json");
             connection.setRequestProperty("Client-ID", "o2aamy4s11aewdlmkb9vj4w11vzanv");
@@ -97,7 +97,8 @@ public class cmds {
 
                     String linefine = line.substring(line.indexOf("[") , line.length()-1);
                     responseContent.append(linefine);
-                    System.out.println(linefine);
+                    /* System.out.println(linefine); */
+                    parse(linefine);
                 }
                 reader.close();
             }
@@ -113,9 +114,8 @@ public class cmds {
         for(int i = 0; i < channels.length(); i++){
             JSONObject channel = channels.getJSONObject(i);
             int viewers = channel.getInt("viewers");
-            String displayName = channel.getString("channel,name");
-
-            System.out.println(displayName + " " + viewers + " ");
+            String channelName = channel.getJSONObject("channel").getString("display_name");
+            System.out.println("Der Kanal " + channelName + " hat gerade " + viewers + ". Stabil! \n\r");
         }
         return null;
     }
