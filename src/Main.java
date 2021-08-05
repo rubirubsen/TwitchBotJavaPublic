@@ -34,7 +34,6 @@ class main {
 
         try {
 
-
             if (client != null && os != null && is != null) {
 
                 os.writeBytes("PASS " + oauth + "\r\n");
@@ -46,50 +45,62 @@ class main {
                 String usrmsg = "";
 
 
-                while (response != null) {
+                while ((response = is.readLine()) != null) {
 
                     if (response.contains("004")) {
                         os.writeBytes("JOIN " + channel + "\r\n");
                         os.writeBytes("PRIVMSG #rubizockt : KonCha \r\n");
                     } else if (response.contains("433")) {
-                    System.out.println("Nickname is already in use.");
-                    return;
+                        System.out.println("Nickname is already in use.");
+                        return;
                     }
-
-
 
                     if (response.startsWith("PING")) {
                         String pong = "PONG" + response.substring(4);
                         os.writeBytes(pong + "\r\n");
                         System.out.println(pong);
-                    } else if (response.contains(";)")) {
-                        cmds c = new cmds();
-                        c.user(response);
-                        c.cool(os, response);
 
-                    } else if (response.contains("bot")) {
-                        cmds c = new cmds();
-                        c.nobot(os, response);
-                        System.out.println(c.nachricht(response) + ">>" + c.user(response));
+                    } else if (response.contains("@")) {
 
-                    } else if (response.contains("test")) {
-                        cmds c = new cmds();
-                        c.channelSearch();
+                                    if (response.contains(";)")) {
+                                        cmds c = new cmds();
+                                        c.user(response);
+                                        c.cool(os, response);
 
-                    } else if (response.contains("go")) {
-                        cmds c = new cmds();
-                        c.sturmAngriff();
+                                    } else if (response.contains("bot")) {
+                                        cmds c = new cmds();
+                                        c.nobot(os, response);
+                                        System.out.println(c.nachricht(response) + ">>" + c.user(response));
 
+                                    } else if (response.contains("test")) {
+                                        cmds c = new cmds();
+                                        c.channelSearch();
 
+                                    } else if (response.contains("go")) {
+                                        cmds c = new cmds();
+                                        c.sturmAngriff();
+                                    } else if (response.contains("sql")) {
+                                        db db = new db();
+                                        db.sqltester(os, response);
+                                    } else if (response.contains("nochma")) {
+                                        connect con = new connect();
+                                        con.connect();
+                                    }
+                                    else {
+                                        cmds c = new cmds();
+                                        System.out.println(c.user(response) + ">>" + c.nachricht(response));
+                        }
                     } else {
                         System.out.println(response);
                     }
-                    os.flush();
                 }
+                os.flush();
+
+
+                os.close();
+                is.close();
+                client.close();
             }
-            os.close();
-            is.close();
-            client.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -91,27 +91,27 @@ public class cmds {
 
     public static String parse(String responseBody) {
 
-                JSONArray channels = new JSONArray(responseBody);
-                for (int i = 0; i < channels.length(); i++) {
+        JSONArray channels = new JSONArray(responseBody);
+        for (int i = 0; i < channels.length(); i++) {
 
-                    JSONObject channel = channels.getJSONObject(i);
-                    int viewers = channel.getInt("viewers");
-                    String channelName = channel.getJSONObject("channel").getString("display_name");
-                    System.out.println("Der Kanal " + channelName + " hat gerade " + viewers + " Viewer(s). Stabil!");
-                    PrintWriter pWriter = null;
+            JSONObject channel = channels.getJSONObject(i);
+            int viewers = channel.getInt("viewers");
+            String channelName = channel.getJSONObject("channel").getString("display_name");
+            System.out.println("Der Kanal " + channelName + " hat gerade " + viewers + " Viewer(s). Stabil!");
+            PrintWriter pWriter = null;
 
-                    try {
-                            pWriter = new PrintWriter(new BufferedWriter(new FileWriter("channels.txt", true)));
-                            pWriter.print(channelName + "\n");
-                        } catch (IOException ioe) {
-                                ioe.printStackTrace();
-                        } finally {
-                            if (pWriter != null) {
-                                pWriter.flush();
-                                pWriter.close();
-                                }
-                            }
-                    }
+            try {
+                pWriter = new PrintWriter(new BufferedWriter(new FileWriter("channels.txt", true)));
+                pWriter.print(channelName + "\n");
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            } finally {
+                if (pWriter != null) {
+                    pWriter.flush();
+                    pWriter.close();
+                }
+            }
+        }
         return null;
     }
 
@@ -143,12 +143,16 @@ public class cmds {
                 }
         }
     }
+
+    public void msgcontent(String response) {
+        cmds c = new cmds();
+        System.out.println(new StringBuilder().append(c.user(response)).append(">>").append(c.nachricht(response)).toString());
+        return;
+    }
 }
+
 
 /*
 NACHRICHTENFORMAT
 :tunzie95!tunzie95@tunzie95.tmi.twitch.tv PRIVMSG #rubizockt :nachricht
-"Client-Id", "o2aamy4s11aewdlmkb9vj4w11vzanv"
-"Authorization", "Bearer n8jh5s2gne756s7hewval1u7r597bt"
-oauth:og530u4hzcj0jvh5ru176ays6hun7u
  */
