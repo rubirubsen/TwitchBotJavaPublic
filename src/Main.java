@@ -61,35 +61,111 @@ class main {
                         System.out.println(pong);
 
                     } else if (response.contains("@")) {
+                            cmds control = new cmds();
 
-                                    if (response.contains(";)")) {
+                            if(cmds.nachricht(response).startsWith("!")) {
+                                System.out.println("! - Befehl erkannt");
+
+                                if (cmds.nachricht(response).equals("!da")) {
+                                    System.out.println("- BOT ONLINE-");
+                                    os.writeBytes("PRIVMSG #rubizockt : da! \r\n");
+
+                                } else if (cmds.nachricht(response).equals("!ts3")) {
+                                    cmds c = new cmds();
+                                    String benutzer = c.user(response);
+                                    System.out.println(benutzer + " >> !ts3");
+                                    os.writeBytes("PRIVMSG #rubizockt :@" + benutzer + " - Die Teamspeak-'Adresse' lautet rubizockt  \n \r");
+
+                                } else if (cmds.nachricht(response).equals("!lurk")) {
+                                    cmds c = new cmds();
+                                    String benutzer = c.user(response);
+                                    System.out.println(benutzer + " >> !lurk");
+                                    os.writeBytes("PRIVMSG #rubizockt :" + benutzer + " ist jetzt im Lurk. Bis denn dann! KonCha \n\r");
+
+                                } else if (cmds.nachricht(response).equals("!liebe")) {
+                                    cmds c = new cmds();
+                                    String usr = c.user(response);
+                                    System.out.println(usr + " >> !liebe");
+                                    os.writeBytes("PRIVMSG #rubizockt : TwitchUnity TwitchUnity TwitchUnity " + usr + " TwitchUnity TwitchUnity TwitchUnity \n\r");
+
+                                } else if (cmds.nachricht(response).equals("!lautlos")) {
+                                    os.writeBytes("PRIVMSG #rubizockt : Falls ihr den Stream lautlos stellen möchtet, macht das bitte über den Tab im Browser (Rechtsklick-Tab stummschalten) anstatt direkt im Stream. Somit werdet ihr weiter als Viewer aufgeführt und helft euren Lieblingsstreamern ;) \n \r");
+
+                                } else if (cmds.nachricht(response).equals("!discord")) {
+                                    cmds c = new cmds();
+                                    String usr = c.user(response);
+                                    System.out.println(usr + " >> !discord");
+                                    os.writeBytes("PRIVMSG #rubizockt : @" + usr + " PurpleStar https://discord.gg/f4QwWb2 PurpleStar \n\r");
+
+                                } else if (cmds.nachricht(response).equals("!dc")) {
+                                    cmds c = new cmds();
+                                    String usr = c.user(response);
+                                    System.out.println(usr + " >> !dc");
+                                    os.writeBytes("PRIVMSG #rubizockt : @" + usr + " PurpleStar https://discord.gg/f4QwWb2 PurpleStar \n\r");
+                                } else if (cmds.nachricht(response).equals("!insta")) {
+                                    cmds c = new cmds();
+                                    String usr = c.user(response);
+                                    System.out.println(usr + " >> !insta");
+                                    os.writeBytes("PRIVMSG #rubizockt : @" + usr + " TTours https://instagram.com/rubizockt/ TTours \n\r");
+                                }
+
+                            } else if (response.contains(";)")) {
                                         cmds c = new cmds();
                                         c.user(response);
                                         c.cool(os, response);
 
-                                    } else if (response.contains("bot")) {
+                            } else if (response.contains("bot")) {
                                         cmds c = new cmds();
                                         c.nobot(os, response);
-                                        System.out.println(c.nachricht(response) + ">>" + c.user(response));
+                                        System.out.println(c.user(response) + ": " + cmds.nachricht(response));
 
-                                    } else if (response.contains("test")) {
+                            }else if (response.contains("taest")) {
                                         cmds c = new cmds();
                                         c.channelSearch();
 
-                                    } else if (response.contains("go")) {
-                                        cmds c = new cmds();
-                                        c.sturmAngriff();
-                                    } else if (response.contains("sql")) {
-                                        db db = new db();
-                                        db.sqltester(os, response);
-                                    } else if (response.contains("nochma")) {
-                                        connect con = new connect();
-                                        con.connect();
-                                    }
-                                    else {
-                                        cmds c = new cmds();
-                                        System.out.println(c.user(response) + ">>" + c.nachricht(response));
-                        }
+                            } else if (response.contains("goh")) {
+                                cmds c = new cmds();
+                                c.sturmAngriff();
+
+                            } else if (response.contains("sql")) {
+                                db db = new db();
+                                db.sqltester(os, response);
+
+                            } else if (response.contains("laehnge")) {
+                                cmds c = new cmds();
+                                int laenge = c.defLaenge(response);
+                                System.out.println(laenge);
+
+                            } else if ((response.toLowerCase().contains("hallo")) || (response.toLowerCase().contains("hey"))){
+                                cmds c= new cmds();
+                                String usr = c.user(response);
+                                os.writeBytes("PRIVMSG #rubizockt : Hallo " + usr + "! KonCha \n\r");
+                                System.out.println(c.user(response) + ": " + cmds.nachricht(response));
+
+                            }else if (response.toLowerCase().contains("guten abend")) {
+                                cmds c = new cmds();
+                                String usr = c.user(response);
+                                os.writeBytes("PRIVMSG #rubizockt : Dir auch einen guten Abend, "+usr+"\n\r");
+                                System.out.println(c.user(response) + ": " + cmds.nachricht(response));
+
+                            }else if (response.toLowerCase().contains("gute nacht")) {
+                                cmds c = new cmds();
+                                String usr = c.user(response);
+                                os.writeBytes("PRIVMSG #rubizockt : Schlaf gut, "+usr+", bis neulich <3 KonCha \n\r");
+                                System.out.println(c.user(response) + ": " + cmds.nachricht(response));
+
+                            }else if (response.toLowerCase().contains("guten morgen")) {
+                                cmds c = new cmds();
+                                String usr = c.user(response);
+                                os.writeBytes("PRIVMSG #rubizockt : Coffee Guten Morgen, "+usr+", schon wach? Coffee \n\r");
+                                System.out.println(c.user(response) + ": " + cmds.nachricht(response));
+
+                            }
+
+                            else {
+                                cmds c = new cmds();
+                                System.out.println(c.user(response) + ": " + cmds.nachricht(response));
+                }
                     } else {
                         System.out.println(response);
                     }
