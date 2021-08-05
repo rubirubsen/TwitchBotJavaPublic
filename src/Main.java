@@ -42,11 +42,11 @@ class main {
                 os.writeBytes("USER " + username + " 0 * :" + realName + "\r\n");
                 os.flush();
 
-                String response = is.readLine());
+                String response = is.readLine();
                 String usrmsg = "";
 
 
-                while ((response != null) {
+                while (response != null) {
 
                     if (response.contains("004")) {
                         os.writeBytes("JOIN " + channel + "\r\n");
@@ -69,7 +69,7 @@ class main {
 
                     } else if (response.contains("bot")) {
                         cmds c = new cmds();
-                        c.nobot(os, response, usrmsg);
+                        c.nobot(os, response);
                         System.out.println(c.nachricht(response) + ">>" + c.user(response));
 
                     } else if (response.contains("test")) {

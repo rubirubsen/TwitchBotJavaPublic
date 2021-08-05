@@ -3,12 +3,11 @@ import org.json.JSONObject;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 
 public class cmds {
-    StringBuffer responseContent = new StringBuffer();
 
     public void cool(DataOutputStream os, String response) {
         try {
@@ -19,7 +18,7 @@ public class cmds {
         System.out.println("Cooler Typ, der " + user(response));
     }
 
-    public void nobot(DataOutputStream os, String response, String usrmsg) {
+    public void nobot(DataOutputStream os, String response) {
 
         try {
             os.writeBytes("PRIVMSG #rubizockt :Hier gibt es keine Bots, " + user(response) + "\r\n");
@@ -30,26 +29,11 @@ public class cmds {
     }
 
     public String user(String response) {
-        String usrmsg = (response.substring(response.indexOf("!") + 1, response.indexOf("@")));
-        return usrmsg;
+        return (response.substring(response.indexOf("!") + 1, response.indexOf("@")));
     }
 
     public static String nachricht(String response) {
-        String msg = (response.substring(response.indexOf(":", 2) + 1));
-        return msg;
-    }
-
-    public static String wahl(final String command) {
-        switch (command) {
-            case "cool":
-                return "Stein";
-            case "bot":
-                return "Schere";
-            case "kaffee":
-                return "Papier";
-            default:
-                return "Kafee";
-        }
+        return (response.substring(response.indexOf(":", 2) + 1));
     }
 
     public void info() throws IOException {
@@ -60,7 +44,8 @@ public class cmds {
         http.setRequestProperty("Accept", "application/vnd.twitchtv.v5+json");
         http.setRequestProperty("Client-ID", "o2aamy4s11aewdlmkb9vj4w11vzanv");
 
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(http.getInputStream(), "UTF-8"))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(http.getInputStream(),
+                StandardCharsets.UTF_8))) {
 
             for (String line; (line = reader.readLine()) != null; ) {
 
@@ -71,7 +56,7 @@ public class cmds {
 
     public void channelSearch() throws IOException {
         HttpURLConnection connection;
-        StringBuffer responseContent = new StringBuffer();
+        StringBuilder responseContent = new StringBuilder();
 
         try {
             URL url = new URL("https://api.twitch.tv/kraken/streams/?language=de&offset=700&limit=5");
@@ -89,7 +74,7 @@ public class cmds {
                 System.out.println(status + " - OK");
             }
 
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"))) {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
 
                 for (String line; (line = reader.readLine()) != null; ) {
 
@@ -97,11 +82,8 @@ public class cmds {
                     responseContent.append(linefine);
                     parse(linefine);
                 }
-                reader.close();
             }
             /* parse(responseContent.toString()); */
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -144,7 +126,7 @@ public class cmds {
         try {
             in = new BufferedReader(new FileReader("channels.txt"));
             int anzahl = 0;
-            String zeile = null;
+            String zeile;
             while ((zeile = in.readLine()) != null) {
                 System.out.println(zeile);
                 anzahl++;
@@ -157,7 +139,7 @@ public class cmds {
             if (in != null)
                 try {
                     in.close();
-                } catch (IOException e) {
+                } catch (IOException ignored) {
                 }
         }
     }
