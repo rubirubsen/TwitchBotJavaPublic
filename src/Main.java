@@ -59,10 +59,10 @@ class main {
                         String pong = "PONG" + response.substring(4);
                         os.writeBytes(pong + "\r\n");
                         System.out.println(pong);
-
+                    // überprüfung ob nachricht im channel gesendet wurde via "@"
                     } else if (response.contains("@")) {
                             cmds control = new cmds();
-
+                            // Überprüfung ob es sich um einen Befehl handelt via "starts with !"
                             if(cmds.nachricht(response).startsWith("!")) {
                                 System.out.println("! - Befehl erkannt");
 
@@ -102,13 +102,16 @@ class main {
                                     String usr = c.user(response);
                                     System.out.println(usr + " >> !dc");
                                     os.writeBytes("PRIVMSG #rubizockt : @" + usr + " PurpleStar https://discord.gg/f4QwWb2 PurpleStar \n\r");
+
                                 } else if (cmds.nachricht(response).equals("!insta")) {
                                     cmds c = new cmds();
                                     String usr = c.user(response);
                                     System.out.println(usr + " >> !insta");
                                     os.writeBytes("PRIVMSG #rubizockt : @" + usr + " TTours https://instagram.com/rubizockt/ TTours \n\r");
                                 }
+                                // Ende der Befehle
 
+                            // Auslöser durch Worterwähnungen (contains)
                             } else if (response.contains(";)")) {
                                         cmds c = new cmds();
                                         c.user(response);
@@ -161,7 +164,7 @@ class main {
                                 System.out.println(c.user(response) + ": " + cmds.nachricht(response));
 
                             }
-
+                            // falls nichts zutrifft, hier einfach ausgabe user : nachricht
                             else {
                                 cmds c = new cmds();
                                 System.out.println(c.user(response) + ": " + cmds.nachricht(response));
