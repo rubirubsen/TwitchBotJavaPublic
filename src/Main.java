@@ -19,18 +19,18 @@ class main {
         String channel = "#rubizockt";
 
 
-        System.out.println("Server: " + hostname + "\nPort: " + port
-                + "\nNickname: " + nickname + "\nUsername: " + username
-                + "\nReal Name: " + realName);
-        System.out.println();
+        System.out.println(
+                        "Server: " + hostname + "\n" +
+                        "Port: " + port + "\n" +
+                        "Nickname: " + nickname + "\n" +
+                        "Username: " + username + "\n" +
+                        "Real Name: " + realName + "\n");
 
-        Socket client;
-        DataInputStream is;
-        DataOutputStream os;
+        System.out.println("-------------------------");
 
-        client = new Socket(hostname, port);
-        os = new DataOutputStream(client.getOutputStream());
-        is = new DataInputStream(client.getInputStream());
+        Socket client = new Socket(hostname, port);
+        DataInputStream is = new DataInputStream(client.getInputStream());
+        DataOutputStream os =  new DataOutputStream(client.getOutputStream());
 
         try {
 
@@ -42,32 +42,27 @@ class main {
                 os.writeBytes("USER " + username + " 0 * :" + realName + "\r\n");
                 os.flush();
 
-                String response;
-                String usrmsg;
+                String response = is.readLine());
+                String usrmsg = "";
 
 
-                while ((response = is.readLine()) != null) {
+                while ((response != null) {
 
                     if (response.contains("004")) {
-                        System.out.println("Log in erfolgreich!");
-                        // We are now logged in.
                         os.writeBytes("JOIN " + channel + "\r\n");
                         os.writeBytes("PRIVMSG #rubizockt : KonCha \r\n");
                     } else if (response.contains("433")) {
-
-                        System.out.println("Nickname is already in use.");
-
-                        return;
-
+                    System.out.println("Nickname is already in use.");
+                    return;
                     }
 
-                    usrmsg = "";
+
 
                     if (response.startsWith("PING")) {
                         String pong = "PONG" + response.substring(4);
                         os.writeBytes(pong + "\r\n");
                         System.out.println(pong);
-                    } else /* hier Test Wortanzahl (==1 -> command) einfügen | wenn 1 wort dann command ausführen sonst sout */ if (response.contains(";)")) {
+                    } else if (response.contains(";)")) {
                         cmds c = new cmds();
                         c.user(response);
                         c.cool(os, response);

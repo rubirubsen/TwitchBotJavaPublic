@@ -95,7 +95,6 @@ public class cmds {
 
                     String linefine = line.substring(line.indexOf("["), line.length() - 1);
                     responseContent.append(linefine);
-                    /* System.out.println(linefine); */
                     parse(linefine);
                 }
                 reader.close();
@@ -109,26 +108,28 @@ public class cmds {
     }
 
     public static String parse(String responseBody) {
-        JSONArray channels = new JSONArray(responseBody);
-        for (int i = 0; i < channels.length(); i++) {
-            JSONObject channel = channels.getJSONObject(i);
-            int viewers = channel.getInt("viewers");
-            String channelName = channel.getJSONObject("channel").getString("display_name");
-            System.out.println("Der Kanal " + channelName + " hat gerade " + viewers + " Viewer(s). Stabil!");
 
-            PrintWriter pWriter = null;
-            try {
-                pWriter = new PrintWriter(new BufferedWriter(new FileWriter("channels.txt", true)));
-                pWriter.print(channelName + "\n");
-            } catch (IOException ioe) {
-                ioe.printStackTrace();
-            } finally {
-                if (pWriter != null) {
-                    pWriter.flush();
-                    pWriter.close();
-                }
-            }
-        }
+                JSONArray channels = new JSONArray(responseBody);
+                for (int i = 0; i < channels.length(); i++) {
+
+                    JSONObject channel = channels.getJSONObject(i);
+                    int viewers = channel.getInt("viewers");
+                    String channelName = channel.getJSONObject("channel").getString("display_name");
+                    System.out.println("Der Kanal " + channelName + " hat gerade " + viewers + " Viewer(s). Stabil!");
+                    PrintWriter pWriter = null;
+
+                    try {
+                            pWriter = new PrintWriter(new BufferedWriter(new FileWriter("channels.txt", true)));
+                            pWriter.print(channelName + "\n");
+                        } catch (IOException ioe) {
+                                ioe.printStackTrace();
+                        } finally {
+                            if (pWriter != null) {
+                                pWriter.flush();
+                                pWriter.close();
+                                }
+                            }
+                    }
         return null;
     }
 
