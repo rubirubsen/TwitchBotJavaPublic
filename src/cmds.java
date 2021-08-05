@@ -149,6 +149,11 @@ public class cmds {
         System.out.println(new StringBuilder().append(c.user(response)).append(">>").append(c.nachricht(response)).toString());
         return;
     }
+
+    public int defLaenge(String response) {
+        int laenge = cmds.nachricht(response).length();
+        return laenge;
+    }
 }
 
 
