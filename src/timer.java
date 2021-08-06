@@ -71,11 +71,11 @@ public class timer extends Thread{
     }
 
     private void werbung(DataOutputStream os) throws IOException, InterruptedException {
-        sleep(1980000);
+        sleep(10000);
         os.writeBytes("PRIVMSG #rubizockt : Falls ihr den Stream lautlos stellen möchtet, macht das bitte über den Tab im Browser (Rechtsklick-Tab stummschalten) anstatt direkt im Stream. Somit werdet ihr weiter als Viewer aufgeführt und helft euren Lieblingsstreamern ;) \n \r");
-        sleep(1980000);
+        sleep(60000);
         os.writeBytes("PRIVMSG #rubizockt : Prime-Subs sind übrigens kostenlos ;) \n\r");
-        sleep(1980000);
+        sleep(50000);
     }
 }
 
