@@ -87,7 +87,7 @@ class main {
                                     cmds c = new cmds();
                                     String usr = c.user(response);
                                     System.out.println(usr + " >> !liebe");
-                                    os.writeBytes("PRIVMSG #rubizockt : TwitchUnity TwitchUnity TwitchUnity " + usr + " TwitchUnity TwitchUnity TwitchUnity \n\r");
+                                    os.writeBytes("PRIVMSG #rubizockt : TwitchUnity TwitchUnity TwitchUnity TwitchUnity TwitchUnity TwitchUnity \n\r");
 
                                 } else if (cmds.nachricht(response).equals("!lautlos")) {
                                     os.writeBytes("PRIVMSG #rubizockt : Falls ihr den Stream lautlos stellen moechtet, macht das bitte ueber den Tab im Browser (Rechtsklick-Tab stummschalten) anstatt direkt im Stream. Somit werdet ihr weiter als Viewer aufgefuehrt und helft euren Lieblingsstreamern ;) \n \r");
@@ -114,7 +114,7 @@ class main {
                                     cmds c = new cmds();
                                     String usr = c.user(response);
                                     System.out.println(usr + " >> !f1");
-                                    os.writeBytes("PRIVMSG #rubizockt : @" + usr + " Rubi fährt die MyTeam Karriere mit einer 79er KI , ohne Fahrhilfen (Traktionshilfe Mittel) und mit mittlerer Länge. Sein Lenkrad ist ein Xbox360 Controller.  \n\r");
+                                    os.writeBytes("PRIVMSG #rubizockt : @" + usr + " Rubi faehrt die MyTeam Karriere mit einer 79er KI , ohne Fahrhilfen (Traktionshilfe Mittel) und mit mittlerer Länge. Sein Lenkrad ist ein Xbox360 Controller.  \n\r");
 
                                 }  else if (cmds.nachricht(response).equals("!rubi")) {
                                     cmds c = new cmds();
@@ -131,6 +131,9 @@ class main {
                                 }else if (cmds.nachricht(response).equals("!kaffee--")){
                                     db db = new db();
                                     db.wenigerKaffee(os);
+                                }else if(cmds.nachricht(response).equals("!zaehlmal")){
+                                    cmds c = new cmds();
+                                    c.userZaehlen(os);
                                 }
                                 else if (cmds.nachricht(response).equals("!thread")) {
                                    timer ti = new timer();

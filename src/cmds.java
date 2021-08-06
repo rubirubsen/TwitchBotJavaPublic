@@ -191,6 +191,28 @@ public class cmds {
         return laenge;
     }
 
+    public void userZaehlen(DataOutputStream os) throws IOException {
+        URL url = new URL("http://tmi.twitch.tv/group/user/rubizockt/chatters");
+        HttpURLConnection http = (HttpURLConnection)url.openConnection();
+        http.setRequestProperty("Accept", "application/vnd.twitchtv.v5+json");
+
+
+        String result = "";
+
+        int status = http.getResponseCode();
+        if (status == 200) {
+            System.out.println(status + " - OK");
+        }
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(http.getInputStream(), StandardCharsets.UTF_8))) {
+            String line = reader.readLine();
+            JSONObject usersAnzahl = new JSONObject(line);
+            int chatters = usersAnzahl.getInt("chatter_count");
+            String chatterino = chatters + " Chatter anwesend.";
+            System.out.println(chatterino);
+            os.writeBytes("PRIVMSG #rubizockt : oddDrums "+chatterino+" oddDrums \n\r");
+        }
+        http.disconnect();
+    }
 }
 
 
