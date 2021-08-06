@@ -120,12 +120,7 @@ class main {
                                     cmds c = new cmds();
                                     String phrase = c.aktuell();
                                     System.out.println(phrase);
-                                    os.writeBytes("PRIVMSG #rubizockt : "+phrase+" \n\r");
-
-                                } else if (cmds.nachricht(response).equals("!kaffee")) {
-                                    cmds c = new cmds();
-                                    int kaffees = c.kaffeeZaehler();
-                                    os.writeBytes("PRIVMSG #rubizockt : "+kaffees+" hat er schon getrunken. \n\r");
+                                    os.writeBytes("PRIVMSG #rubizockt :"+phrase+" \n\r");
 
                                 }else if (cmds.nachricht(response).equals("!kaffeesucht")){
                                     db db = new db();

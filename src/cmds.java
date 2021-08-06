@@ -117,8 +117,10 @@ public class cmds {
 
                     JSONObject rubi = infoakt.getJSONObject(i);
                     String RubiGame = rubi.getString("game");
+                    String channelstatus = rubi.getJSONObject("channel").getString("status");
                     int Follower = rubi.getJSONObject("channel").getInt("followers");
-                    result = "Rubi zockt gerade '" + RubiGame + "' und hat " + Follower + " Follower.";
+                    int views = rubi.getJSONObject("channel").getInt("views");
+                    result = "/me TwitchSings " + RubiGame + " TwitchSings | Rubi hat momentan " + Follower + " Follower und haette gern 500 | <3 "+views+" Views <3 | GlitchCat  Jetzt live: '"+channelstatus+"' GlitchCat  \n \r";
                 }
             }
         }return result;
