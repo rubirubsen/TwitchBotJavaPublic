@@ -108,6 +108,9 @@ class main {
                                     String usr = c.user(response);
                                     System.out.println(usr + " >> !insta");
                                     os.writeBytes("PRIVMSG #rubizockt : @" + usr + " TTours https://instagram.com/rubizockt/ TTours \n\r");
+                                }  else if (cmds.nachricht(response).equals("!thread")) {
+                                   timer ti = new timer();
+                                   ti.start();
                                 }
                                 // Ende der Befehle
 
