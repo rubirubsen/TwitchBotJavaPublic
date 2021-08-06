@@ -2,6 +2,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.sql.SQLException;
 
 class main {
 
@@ -89,7 +90,7 @@ class main {
                                     os.writeBytes("PRIVMSG #rubizockt : TwitchUnity TwitchUnity TwitchUnity " + usr + " TwitchUnity TwitchUnity TwitchUnity \n\r");
 
                                 } else if (cmds.nachricht(response).equals("!lautlos")) {
-                                    os.writeBytes("PRIVMSG #rubizockt : Falls ihr den Stream lautlos stellen möchtet, macht das bitte über den Tab im Browser (Rechtsklick-Tab stummschalten) anstatt direkt im Stream. Somit werdet ihr weiter als Viewer aufgeführt und helft euren Lieblingsstreamern ;) \n \r");
+                                    os.writeBytes("PRIVMSG #rubizockt : Falls ihr den Stream lautlos stellen moechtet, macht das bitte ueber den Tab im Browser (Rechtsklick-Tab stummschalten) anstatt direkt im Stream. Somit werdet ihr weiter als Viewer aufgefuehrt und helft euren Lieblingsstreamern ;) \n \r");
 
                                 } else if (cmds.nachricht(response).equals("!discord")) {
                                     cmds c = new cmds();
@@ -108,7 +109,35 @@ class main {
                                     String usr = c.user(response);
                                     System.out.println(usr + " >> !insta");
                                     os.writeBytes("PRIVMSG #rubizockt : @" + usr + " TTours https://instagram.com/rubizockt/ TTours \n\r");
-                                }  else if (cmds.nachricht(response).equals("!thread")) {
+
+                                }   else if (cmds.nachricht(response).equals("!f1")) {
+                                    cmds c = new cmds();
+                                    String usr = c.user(response);
+                                    System.out.println(usr + " >> !f1");
+                                    os.writeBytes("PRIVMSG #rubizockt : @" + usr + " Rubi fährt die MyTeam Karriere mit einer 79er KI , ohne Fahrhilfen (Traktionshilfe Mittel) und mit mittlerer Länge. Sein Lenkrad ist ein Xbox360 Controller.  \n\r");
+
+                                }  else if (cmds.nachricht(response).equals("!rubi")) {
+                                    cmds c = new cmds();
+                                    String phrase = c.aktuell();
+                                    System.out.println(phrase);
+                                    os.writeBytes("PRIVMSG #rubizockt : "+phrase+" \n\r");
+
+                                } else if (cmds.nachricht(response).equals("!kaffee")) {
+                                    cmds c = new cmds();
+                                    int kaffees = c.kaffeeZaehler();
+                                    os.writeBytes("PRIVMSG #rubizockt : "+kaffees+" hat er schon getrunken. \n\r");
+
+                                }else if (cmds.nachricht(response).equals("!kaffeesucht")){
+                                    db db = new db();
+                                    db.kaffeeAnzahl(os);
+                                }else if (cmds.nachricht(response).equals("!kaffee++")){
+                                    db db = new db();
+                                    db.mehrKaffee(os);
+                                }else if (cmds.nachricht(response).equals("!kaffee--")){
+                                    db db = new db();
+                                    db.wenigerKaffee(os);
+                                }
+                                else if (cmds.nachricht(response).equals("!thread")) {
                                    timer ti = new timer();
                                    ti.start();
                                 }
@@ -134,8 +163,7 @@ class main {
                                 c.sturmAngriff();
 
                             } else if (response.contains("sql")) {
-                                db db = new db();
-                                db.sqltester(os, response);
+
 
                             } else if (response.contains("laehnge")) {
                                 cmds c = new cmds();
@@ -183,7 +211,7 @@ class main {
                 is.close();
                 client.close();
             }
-        } catch (IOException e) {
+        } catch (IOException | SQLException e) {
             e.printStackTrace();
         }
     }
