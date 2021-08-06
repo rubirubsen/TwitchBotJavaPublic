@@ -89,6 +89,40 @@ public class cmds {
         }
     }
 
+    public String aktuell() throws IOException {
+
+        StringBuilder responseContent = new StringBuilder();
+        URL url = new URL("https://api.twitch.tv/kraken/search/streams?query=rubizockt");
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestProperty("Accept", "application/vnd.twitchtv.v5+json");
+        connection.setRequestProperty("Client-ID", "o2aamy4s11aewdlmkb9vj4w11vzanv");
+
+        connection.setRequestMethod("GET");
+        connection.setConnectTimeout(5000);
+        connection.setReadTimeout(5000);
+        String result ="";
+        int status = connection.getResponseCode();
+        if (status == 200) {
+            System.out.println(status + " - OK");
+        }
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
+
+            for (String line; (line = reader.readLine()) != null; ) {
+                String linefine = line.substring(line.indexOf("["), line.length() - 1);
+                responseContent.append(linefine);
+                JSONArray infoakt = new JSONArray(linefine);
+
+                for (int i = 0; i < infoakt.length(); i++) {
+
+                    JSONObject rubi = infoakt.getJSONObject(i);
+                    String RubiGame = rubi.getString("game");
+                    int Follower = rubi.getJSONObject("channel").getInt("followers");
+                    result = "Rubi zockt gerade '" + RubiGame + "' und hat " + Follower + " Follower.";
+                }
+            }
+        }return result;
+    }
     public static String parse(String responseBody) {
 
         JSONArray channels = new JSONArray(responseBody);
@@ -154,6 +188,7 @@ public class cmds {
         int laenge = cmds.nachricht(response).length();
         return laenge;
     }
+
 }
 
 
