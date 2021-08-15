@@ -59,7 +59,7 @@ public class cmds {
         StringBuilder responseContent = new StringBuilder();
 
         try {
-            URL url = new URL("https://api.twitch.tv/kraken/streams/?language=de&offset=700&limit=5");
+            URL url = new URL("https://api.twitch.tv/kraken/streams?language=de&game=fortnite&offset=400&limit=100");
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("Accept", "application/vnd.twitchtv.v5+json");
             connection.setRequestProperty("Client-ID", "o2aamy4s11aewdlmkb9vj4w11vzanv");
@@ -93,7 +93,7 @@ public class cmds {
 
         StringBuilder responseContent = new StringBuilder();
         URL url = new URL("https://api.twitch.tv/kraken/search/streams?query=rubizockt");
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        HttpURLConnection connection;
         connection = (HttpURLConnection) url.openConnection();
         connection.setRequestProperty("Accept", "application/vnd.twitchtv.v5+json");
         connection.setRequestProperty("Client-ID", "o2aamy4s11aewdlmkb9vj4w11vzanv");
@@ -182,13 +182,11 @@ public class cmds {
 
     public void msgcontent(String response) {
         cmds c = new cmds();
-        System.out.println(new StringBuilder().append(c.user(response)).append(">>").append(c.nachricht(response)).toString());
-        return;
+        System.out.println(c.user(response) + ">>" + nachricht(response));
     }
 
     public int defLaenge(String response) {
-        int laenge = cmds.nachricht(response).length();
-        return laenge;
+        return cmds.nachricht(response).length();
     }
 
     public void userZaehlen(DataOutputStream os) throws IOException {
@@ -219,4 +217,12 @@ public class cmds {
 /*
 NACHRICHTENFORMAT
 :tunzie95!tunzie95@tunzie95.tmi.twitch.tv PRIVMSG #rubizockt :nachricht
+ */
+
+/*
+deutsche streams suchen mit offset und limit:
+curl -H 'Accept: application/vnd.twitchtv.v5+json' \
+-H 'Client-ID: o2aamy4s11aewdlmkb9vj4w11vzanv' \
+-X GET 'https://api.twitch.tv/kraken/streams?language=de&offset=600&limit=100'
+
  */
