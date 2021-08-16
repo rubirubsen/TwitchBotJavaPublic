@@ -11,8 +11,9 @@ A courageous try for an own IRC/Twitch-Bot
   <li>Chat Output in Main Window <img src="https://img.icons8.com/doodle/2x/checkmark.png" height="15px"></li>
   <li>QuickChangeButtons for MainGames <img src="https://img.icons8.com/doodle/2x/checkmark.png"height="15px"></li>
 </ul>
-<br>
-Functions to come:
+<p>
+  Functions to come:
+</p>
 <ul>
   <li>Spotify Integration for easy Music Control<img src="https://img.icons8.com/fluency/2x/progress-indicator.png" height="15px"></li>
   <li>Win / Loss / Any Counter <img src="https://img.icons8.com/fluency/2x/progress-indicator.png" height="15px"></li>
