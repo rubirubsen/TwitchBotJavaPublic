@@ -1,9 +1,11 @@
 # TwitchBotJavaPublic
 A courageous try for an own IRC/Twitch-Bot
-<br>
-<img src="https://i.imgur.com/YDPox2L.png">
-
-OnGoing Project to get Java-Knowledge.
+<p>
+  <img src="https://i.imgur.com/YDPox2L.png">
+</p>
+<p>
+  OnGoing Project to get Java-Knowledge.
+</p>
 <ul>
   <li>TextLine for input <img src="https://img.icons8.com/doodle/2x/checkmark.png" height="15px"></li>
   <li>Chat Output in Main Window <img src="https://img.icons8.com/doodle/2x/checkmark.png" height="15px"></li>
