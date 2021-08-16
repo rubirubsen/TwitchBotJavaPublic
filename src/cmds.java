@@ -1,6 +1,5 @@
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -9,6 +8,78 @@ import java.nio.charset.StandardCharsets;
 
 public class cmds {
 
+    public String aktuell() throws IOException {
+
+        StringBuilder responseContent = new StringBuilder();
+        URL url = new URL("https://api.twitch.tv/kraken/search/streams?query=rubizockt");
+        HttpURLConnection connection;
+        connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestProperty("Accept", "application/vnd.twitchtv.v5+json");
+        connection.setRequestProperty("Client-ID", "o2aamy4s11aewdlmkb9vj4w11vzanv");
+
+        connection.setRequestMethod("GET");
+        connection.setConnectTimeout(5000);
+        connection.setReadTimeout(5000);
+        String result ="";
+        int status = connection.getResponseCode();
+        if (status == 200) {
+            System.out.println(status + " - OK");
+        }
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
+
+            for (String line; (line = reader.readLine()) != null; ) {
+                String linefine = line.substring(line.indexOf("["), line.length() - 1);
+                responseContent.append(linefine);
+                JSONArray infoakt = new JSONArray(linefine);
+
+                for (int i = 0; i < infoakt.length(); i++) {
+
+                    JSONObject rubi = infoakt.getJSONObject(i);
+                    String RubiGame = rubi.getString("game");
+                    String channelstatus = rubi.getJSONObject("channel").getString("status");
+                    int Follower = rubi.getJSONObject("channel").getInt("followers");
+                    int views = rubi.getJSONObject("channel").getInt("views");
+                    result = "/me TwitchSings " + RubiGame + " TwitchSings | Rubi hat momentan " + Follower + " Follower und haette gern 500 | <3 "+views+" Views <3 | GlitchCat  Jetzt live: '"+channelstatus+"' GlitchCat  \n \r";
+                }
+            }
+        }return result;
+    }
+
+    public void channelSearch() throws IOException {
+        HttpURLConnection connection;
+        StringBuilder responseContent = new StringBuilder();
+
+        try {
+            URL url = new URL("https://api.twitch.tv/kraken/streams?language=de&game=fortnite&offset=400&limit=100");
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestProperty("Accept", "application/vnd.twitchtv.v5+json");
+            connection.setRequestProperty("Client-ID", "o2aamy4s11aewdlmkb9vj4w11vzanv");
+
+            //Anfrage-Modell
+            connection.setRequestMethod("GET");
+            connection.setConnectTimeout(5000);
+            connection.setReadTimeout(5000);
+
+            int status = connection.getResponseCode();
+            if (status == 200) {
+                System.out.println(status + " - OK");
+            }
+
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
+
+                for (String line; (line = reader.readLine()) != null; ) {
+
+                    String linefine = line.substring(line.indexOf("["), line.length() - 1);
+                    responseContent.append(linefine);
+                    parse(linefine);
+                }
+            }
+            /* parse(responseContent.toString()); */
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void cool(DataOutputStream os, String response) {
         try {
             os.writeBytes("PRIVMSG #rubizockt :;)\r\n");
@@ -16,6 +87,10 @@ public class cmds {
             e.printStackTrace();
         }
         System.out.println("Cooler Typ, der " + user(response));
+    }
+
+    public int defLaenge(String response) {
+        return cmds.nachricht(response).length();
     }
 
     public void nobot(DataOutputStream os, String response) {
@@ -54,77 +129,6 @@ public class cmds {
         }
     }
 
-    public void channelSearch() throws IOException {
-        HttpURLConnection connection;
-        StringBuilder responseContent = new StringBuilder();
-
-        try {
-            URL url = new URL("https://api.twitch.tv/kraken/streams?language=de&game=fortnite&offset=400&limit=100");
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestProperty("Accept", "application/vnd.twitchtv.v5+json");
-            connection.setRequestProperty("Client-ID", "o2aamy4s11aewdlmkb9vj4w11vzanv");
-
-            //Anfrage-Modell
-            connection.setRequestMethod("GET");
-            connection.setConnectTimeout(5000);
-            connection.setReadTimeout(5000);
-
-            int status = connection.getResponseCode();
-            if (status == 200) {
-                System.out.println(status + " - OK");
-            }
-
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
-
-                for (String line; (line = reader.readLine()) != null; ) {
-
-                    String linefine = line.substring(line.indexOf("["), line.length() - 1);
-                    responseContent.append(linefine);
-                    parse(linefine);
-                }
-            }
-            /* parse(responseContent.toString()); */
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public String aktuell() throws IOException {
-
-        StringBuilder responseContent = new StringBuilder();
-        URL url = new URL("https://api.twitch.tv/kraken/search/streams?query=rubizockt");
-        HttpURLConnection connection;
-        connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestProperty("Accept", "application/vnd.twitchtv.v5+json");
-        connection.setRequestProperty("Client-ID", "o2aamy4s11aewdlmkb9vj4w11vzanv");
-
-        connection.setRequestMethod("GET");
-        connection.setConnectTimeout(5000);
-        connection.setReadTimeout(5000);
-        String result ="";
-        int status = connection.getResponseCode();
-        if (status == 200) {
-            System.out.println(status + " - OK");
-        }
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
-
-            for (String line; (line = reader.readLine()) != null; ) {
-                String linefine = line.substring(line.indexOf("["), line.length() - 1);
-                responseContent.append(linefine);
-                JSONArray infoakt = new JSONArray(linefine);
-
-                for (int i = 0; i < infoakt.length(); i++) {
-
-                    JSONObject rubi = infoakt.getJSONObject(i);
-                    String RubiGame = rubi.getString("game");
-                    String channelstatus = rubi.getJSONObject("channel").getString("status");
-                    int Follower = rubi.getJSONObject("channel").getInt("followers");
-                    int views = rubi.getJSONObject("channel").getInt("views");
-                    result = "/me TwitchSings " + RubiGame + " TwitchSings | Rubi hat momentan " + Follower + " Follower und haette gern 500 | <3 "+views+" Views <3 | GlitchCat  Jetzt live: '"+channelstatus+"' GlitchCat  \n \r";
-                }
-            }
-        }return result;
-    }
     public static String parse(String responseBody) {
 
         JSONArray channels = new JSONArray(responseBody);
@@ -185,10 +189,6 @@ public class cmds {
         System.out.println(c.user(response) + ">>" + nachricht(response));
     }
 
-    public int defLaenge(String response) {
-        return cmds.nachricht(response).length();
-    }
-
     public void userZaehlen(DataOutputStream os) throws IOException {
         URL url = new URL("http://tmi.twitch.tv/group/user/rubizockt/chatters");
         HttpURLConnection http = (HttpURLConnection)url.openConnection();
@@ -211,8 +211,19 @@ public class cmds {
         }
         http.disconnect();
     }
-}
 
+    public void joinChannel(DataOutputStream os,String channel) throws IOException {
+        os.writeBytes("JOIN " + channel + "\r\n");
+        os.writeBytes("PRIVMSG #rubizockt : KonCha \r\n");
+    }
+
+    public void pong(DataOutputStream os,String response) throws IOException {
+        String pong = "PONG" + response.substring(4);
+        os.writeBytes(pong + "\r\n");
+        System.out.println(pong);
+    }
+
+}
 
 /*
 NACHRICHTENFORMAT

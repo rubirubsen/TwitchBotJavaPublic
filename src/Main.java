@@ -20,8 +20,8 @@ class main {
         DataInputStream is = new DataInputStream(client.getInputStream());
         DataOutputStream os =  new DataOutputStream(client.getOutputStream());
 
-        MainWindow GuiHaupt = new MainWindow("Rubis Bot",os,is);
-        connect.run(client,is,os,hostname,nickname,username,realName,oauth,channel,port);
+        MainWindow GuiHaupt = new MainWindow("Rubis Bot",os,is,channel,oauth,realName,username,nickname,hostname,port,client);
+
     }
 }
 
