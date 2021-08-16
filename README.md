@@ -1,5 +1,5 @@
 # TwitchBotJavaPublic
-A brief Try for an own IRC/Twitch-Bot
+A courageous try for an own IRC/Twitch-Bot
 <img src="https://i.imgur.com/YDPox2L.png">
 
 OnGoing Project to get Java-Knowledge.
