@@ -20,4 +20,7 @@ A courageous try for an own IRC/Twitch-Bot
   <li>Emote only Switch <img src="https://img.icons8.com/fluency/2x/progress-indicator.png" height="15px"></li>
   <li>VIP / OP Button <img src="https://img.icons8.com/fluency/2x/progress-indicator.png" height="15px"></li>
 </ul>
-
+<ul>
+  <li><img src="https://i.imgur.com/IQ2OPPB.png"></li>
+  <li><img src="https://i.imgur.com/THhNiJj.png">/li>
+</ul>
