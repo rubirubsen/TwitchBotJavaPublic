@@ -23,5 +23,5 @@ A courageous try for an own IRC/Twitch-Bot
 
   <img src="https://i.imgur.com/kHGt6Ir.png">
   <img src="https://i.imgur.com/THhNiJj.png">
-  <img src="https://i.imgur.com/PXSaOlw.png">
+  <img src="https://i.imgur.com/PXSaOlw.png" width="50%" height="50%"><img src="https://i.imgur.com/dOR58Xp.png" width="50%" height="50%">
 </ul>
